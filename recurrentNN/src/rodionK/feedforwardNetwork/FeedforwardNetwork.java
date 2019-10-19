@@ -2,14 +2,10 @@ package rodionK.feedforwardNetwork;
 
 import rodionK.NeuralNetwork;
 import rodionK.networkComponents.layer.Layer;
-import rodionK.utils.ArrayInitializer;
 import rodionK.utils.Propagation;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class FeedforwardNetwork extends NeuralNetwork {
-
 
     public FeedforwardNetwork train2D(Double[][] inputs, Double[][] targets, int numberOfIterations) {
 
@@ -18,7 +14,7 @@ public class FeedforwardNetwork extends NeuralNetwork {
             Propagation.backward2D(this, inputs, targets);
         }
 
-        // print output after training 
+        // print output after training
         List layers = this.getNeuralLayerList();
         Layer layer = (Layer) layers.get(layers.size() - 1);
         for (int i = 0; i < layer.getActivatedOutput().length; i++) {
