@@ -36,16 +36,6 @@ public class Propagation {
             }
         }
 
-        // print output
-        Layer layer = layers.get(layers.size() - 1);
-        for (int i = 0; i < layer.getActivatedOutput().length; i++) {
-            for (int j = 0; j < layer.getActivatedOutput()[0].length; j++) {
-                System.out.print("Activation of " + layer.getClass() + ": " + layer.getActivatedOutput()[i][j] + ", ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-
         return network;
     }
 
@@ -75,33 +65,6 @@ public class Propagation {
         }
 
         layer.setActivatedOutput(output);
-
-        return output;
-    }
-
-
-    public static Double[] getInactivatedOutput(NeuralNetwork network, Double[] input) {
-        List<Layer> layers = network.getNeuralLayerList();
-        Double[] output = null;
-
-        for (int layerIndex = 0; layerIndex < layers.size(); layerIndex++) {
-            Layer layer = layers.get(layerIndex);
-            Double[][] weightMatrix2D = layer.getWeights();
-            Double[] bias = layer.getBias();
-
-            output = ArrayInitializer.initializeArray(new Double[weightMatrix2D[0].length]);
-
-            for (int j = 0; j < weightMatrix2D[0].length; j++) {
-
-                for (int i = 0; i < weightMatrix2D.length; i++) {
-                    output[j] += weightMatrix2D[i][j] * input[i];
-                }
-
-                output[j] += bias[j];
-            }
-
-            input = output;
-        }
 
         return output;
     }

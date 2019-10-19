@@ -5,14 +5,29 @@ import rodionK.networkComponents.layer.Layer;
 import rodionK.utils.ArrayInitializer;
 import rodionK.utils.Propagation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FeedforwardNetwork extends NeuralNetwork {
 
 
     public FeedforwardNetwork train2D(Double[][] inputs, Double[][] targets, int numberOfIterations) {
+
         for (int i = 0; i < numberOfIterations; i++) {
             Propagation.forward2D(this, inputs);
             Propagation.backward2D(this, inputs, targets);
         }
+
+        // print output after training 
+        List layers = this.getNeuralLayerList();
+        Layer layer = (Layer) layers.get(layers.size() - 1);
+        for (int i = 0; i < layer.getActivatedOutput().length; i++) {
+            for (int j = 0; j < layer.getActivatedOutput()[0].length; j++) {
+                System.out.print("Activation of " + layer.getClass() + ": " + layer.getActivatedOutput()[i][j] + ", ");
+            }
+            System.out.println();
+        }
+        System.out.println();
 
         return this;
     }
@@ -36,7 +51,7 @@ public class FeedforwardNetwork extends NeuralNetwork {
 
         ffn.setNumberOfInputNeurons(2)
                 .setNumberOfHiddenNeurons(10)
-                .setNumberOfHiddenLayers(1)
+                .setNumberOfHiddenLayers(2)
                 .setNumberOfOutputNeurons(1)
                 .buildDefaultNetwork()
                 .setLearningRate(0.6);
