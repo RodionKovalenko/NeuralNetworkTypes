@@ -3,6 +3,8 @@ package rodionK.utils;
 import rodionK.NeuralNetwork;
 import rodionK.networkComponents.layer.Layer;
 
+import javax.xml.crypto.dom.DOMCryptoContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,19 +20,27 @@ public class WeightInitializer {
                 Layer layer = layers.get(layerIndex);
                 Double[][] weightMatrix2D = layer.getWeights();
                 Double[] biasArray = layer.getBias();
+                List<List<Double>> listWeights = layer.getListWeights();
+
+                if (listWeights == null) {
+                    listWeights = new ArrayList<>();
+                }
 
                 if (weightMatrix2D.length != 0) {
                     for (int j = 0; j < weightMatrix2D[0].length; j++) {
+                        ArrayList<Double> layerWeightList = new ArrayList<>();
                         biasArray[j] = new Random().nextGaussian() * 0.3;
+
                         for (int i = 0; i < weightMatrix2D.length; i++) {
                             weightMatrix2D[i][j] = new Random().nextGaussian() * 0.3;
-                            //weightMatrix2D[i][j] = 0.5;
+
+                            layerWeightList.add(weightMatrix2D[i][j]);
                         }
+
+                        listWeights.add(layerWeightList);
                     }
-                    // this can be avoided
-                    layer.setWeights(weightMatrix2D);
-                    layer.setBias(biasArray);
-                    layers.set(layerIndex, layer);
+
+                    layer.setListWeights(listWeights);
                 }
             }
         }

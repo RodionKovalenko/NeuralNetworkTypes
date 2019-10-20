@@ -11,23 +11,12 @@ import java.util.List;
 
 public class NeuralNetwork {
     public List<Layer> neuralLayerList;
-    public List<List<Double>> networkWeightList2D;
-
 
     public Double learningRate;
     public Integer numberOfInputNeurons;
     public Integer numberOfHiddenNeurons;
     public Integer numberOfOutputNeurons;
     public Integer numberOfHiddenLayers;
-
-    public List<List<Double>> getNetworkWeightList2D() {
-        return networkWeightList2D;
-    }
-
-    public NeuralNetwork setNetworkWeightList2D(List<List<Double>> networkWeightList2D) {
-        this.networkWeightList2D = networkWeightList2D;
-        return this;
-    }
 
     public Double getLearningRate() {
         return learningRate;
@@ -83,7 +72,7 @@ public class NeuralNetwork {
         return this;
     }
 
-    public NeuralNetwork buildDefaultNetwork() {
+    public NeuralNetwork buildDefaultFeedForwardNetwork() {
 
         if (this.numberOfInputNeurons == null) {
             this.numberOfInputNeurons = 2;
@@ -139,11 +128,13 @@ public class NeuralNetwork {
                 HiddenLayer hiddenLayer = new HiddenLayer();
                 hiddenLayer.setWeights(layerWeights);
                 hiddenLayer.setBias(layerBiasArray);
+
                 if (layer > 0) {
                     Layer previousLayer = this.neuralLayerList.get(layer - 1);
                     previousLayer.setNext(hiddenLayer);
                     hiddenLayer.setPrevious(previousLayer);
                 }
+                
                 hiddenLayer.setActivationType(Activation.activationType.LOGISTIC);
                 this.neuralLayerList.add(hiddenLayer);
             }

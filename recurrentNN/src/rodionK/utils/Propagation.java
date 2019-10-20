@@ -18,7 +18,7 @@ public class Propagation {
 
     public static NeuralNetwork backward2D(NeuralNetwork network, Double[][] inputs, Double[][] targets) {
         if (network instanceof FeedforwardNetwork) {
-            return backward2DFeedforward(network, inputs, targets);
+            return backward2DFeedForward(network, inputs, targets);
         }
 
         return network;
@@ -32,14 +32,14 @@ public class Propagation {
         if (layers != null) {
             for (int layerIndex = 0; layerIndex < layers.size(); layerIndex++) {
                 Layer layer = layers.get(layerIndex);
-                output = getOutput(layer, output);
+                output = getLayerOutput(layer, output);
             }
         }
 
         return network;
     }
 
-    public static Double[][] getOutput(Layer layer, Double[][] inputSet) {
+    public static Double[][] getLayerOutput(Layer layer, Double[][] inputSet) {
         Double[][] output = null;
 
         for (int inputSetNumber = 0; inputSetNumber < inputSet.length; inputSetNumber++) {
@@ -69,10 +69,9 @@ public class Propagation {
         return output;
     }
 
-    public static NeuralNetwork backward2DFeedforward(NeuralNetwork network, Double[][] inputSet, Double[][] targetSet) {
+    public static NeuralNetwork backward2DFeedForward(NeuralNetwork network, Double[][] inputSet, Double[][] targetSet) {
         List<Layer> layers = network.getNeuralLayerList();
 
-        //for (int targetIndex = 0; targetIndex < targets.length; targetIndex++) {
         for (int layerIndex = layers.size() - 1; layerIndex >= 0; layerIndex--) {
             Layer layer = layers.get(layerIndex);
             Double[][] activatedOutput = layer.getActivatedOutput();

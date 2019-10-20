@@ -3,6 +3,7 @@ package rodionK.feedforwardNetwork;
 import rodionK.NeuralNetwork;
 import rodionK.networkComponents.layer.Layer;
 import rodionK.utils.Propagation;
+
 import java.util.List;
 
 public class FeedforwardNetwork extends NeuralNetwork {
@@ -12,6 +13,7 @@ public class FeedforwardNetwork extends NeuralNetwork {
         for (int i = 0; i < numberOfIterations; i++) {
             Propagation.forward2D(this, inputs);
             Propagation.backward2D(this, inputs, targets);
+            // this.setLearningRate(this.getLearningRate() * 0.99);
         }
 
         // print output after training
@@ -19,7 +21,7 @@ public class FeedforwardNetwork extends NeuralNetwork {
         Layer layer = (Layer) layers.get(layers.size() - 1);
         for (int i = 0; i < layer.getActivatedOutput().length; i++) {
             for (int j = 0; j < layer.getActivatedOutput()[0].length; j++) {
-                System.out.print("Activation of " + layer.getClass() + ": " + layer.getActivatedOutput()[i][j] + ", ");
+                System.out.print(Math.round(layer.getActivatedOutput()[i][j]) + ", ");
             }
             System.out.println();
         }
@@ -38,21 +40,21 @@ public class FeedforwardNetwork extends NeuralNetwork {
         inputSet[3] = new Double[]{0.0, 1.0};
 
 
-        targets[0] = new Double[]{1.0};
-        targets[1] = new Double[]{0.0};
-        targets[2] = new Double[]{0.0};
-        targets[3] = new Double[]{1.0};
+        targets[0] = new Double[]{1.0, 1.0, 0.0};
+        targets[1] = new Double[]{0.0, 1.0, 1.0};
+        targets[2] = new Double[]{0.0, 0.0, 0.0};
+        targets[3] = new Double[]{1.0, 0.0, 1.0};
 
         FeedforwardNetwork ffn = new FeedforwardNetwork();
 
         ffn.setNumberOfInputNeurons(2)
-                .setNumberOfHiddenNeurons(10)
-                .setNumberOfHiddenLayers(2)
-                .setNumberOfOutputNeurons(1)
-                .buildDefaultNetwork()
+                .setNumberOfHiddenNeurons(30)
+                .setNumberOfHiddenLayers(1)
+                .setNumberOfOutputNeurons(3)
+                .buildDefaultFeedForwardNetwork()
                 .setLearningRate(0.6);
 
-        ffn.train2D(inputSet, targets, 5000);
+        ffn.train2D(inputSet, targets, 3000);
     }
 
 }

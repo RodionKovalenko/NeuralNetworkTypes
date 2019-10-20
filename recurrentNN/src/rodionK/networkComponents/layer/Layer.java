@@ -2,8 +2,12 @@ package rodionK.networkComponents.layer;
 
 import rodionK.utils.Activation;
 
+import java.util.List;
+
 public class Layer {
     Double [][] weights;
+    List<List<Double>> listWeights;
+    List<List<Double>> listBias;
     Double [] bias;
     Double [][] inactivatedOutput;
     Double[][] activatedOutput;
@@ -12,7 +16,7 @@ public class Layer {
     Double heavisideThreshthold;
     Layer next;
     Layer previous;
-    public Activation.activationType activationType;
+    Activation.activationType activationType;
 
     public Double[][] getWeights() {
         return weights;
@@ -101,6 +105,24 @@ public class Layer {
 
     public Layer setHeavisideThreshthold(Double heavisideThreshthold) {
         this.heavisideThreshthold = heavisideThreshthold;
+        return this;
+    }
+
+    public List<List<Double>> getListWeights() {
+        return listWeights;
+    }
+
+    public Layer setListWeights(List<List<Double>> listWeights) {
+        this.listWeights = listWeights;
+        return this;
+    }
+
+    public List<List<Double>> getListBias() {
+        return listBias;
+    }
+
+    public Layer setListBias(List<List<Double>> listBias) {
+        this.listBias = listBias;
         return this;
     }
 }
